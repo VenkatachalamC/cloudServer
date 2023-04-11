@@ -4,9 +4,13 @@ const multer=require('multer')
 const bodyParser=require('body-parser')
 const UserModel=require('./Models/User')
 const DocumentModel=require('./Models/documents')
+const cors=require('cors')
 
 
 const app=express()
+app.use(cors({
+    origin: 'http://localhost:3000'
+}))
 const storage=multer.memoryStorage()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
@@ -57,6 +61,15 @@ app.post("/signup",
     
 })
 
+app.post('/rename',(req,res)=>{
+    DocumentModel.findOneAndUpdate({
+        userid:req.body.userid,
+        fileName:req.body.filename,
+    },{$set:{
+        fileName:req.body.newname
+    }}).then(result=>res.json({status:'ok'})).catch(err=>res.json({status:'error'}))
+})
+
 //get documents of user
 app.get("/documents/:id",
 (req,res)=>{
@@ -96,7 +109,7 @@ app.get("/:filename",
         }
         else{
             res.send(result.length.toString())
-        }
+        } 
     })
 })
 
