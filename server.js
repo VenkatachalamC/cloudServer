@@ -7,9 +7,7 @@ const DocumentModel=require('./Models/documents')
 const port =process.env.port || 5000;
 const cors=require('cors')
 const app=express()
-app.use(cors({
-    origin:'http://localhost:3000'
-}))
+app.use(cors())
 const storage=multer.memoryStorage()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
