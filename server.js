@@ -5,7 +5,11 @@ const bodyParser=require('body-parser')
 const UserModel=require('./Models/User')
 const DocumentModel=require('./Models/documents')
 const port =process.env.port || 5000;
+cors=require('cors')
 const app=express()
+app.use(cors({
+    origin:'http://localhost:3000'
+}))
 const storage=multer.memoryStorage()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
@@ -13,7 +17,7 @@ const upload=multer({storage:storage})
 
 
 //Database Connection.
-mongoose.connect("mongodb+srv://test:test123@cluster0.kifneti.mongodb.net/test").then(result=>app.listen(5000))
+mongoose.connect("mongodb+srv://test:test123@cluster0.kifneti.mongodb.net/test").then(result=>app.listen(port))
 
 //Sign In
 app.post("/SignIn",
