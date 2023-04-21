@@ -5,7 +5,7 @@ const bodyParser=require('body-parser')
 const UserModel=require('./Models/User')
 const DocumentModel=require('./Models/documents')
 const port =process.env.port || 5000;
-cors=require('cors')
+const cors=require('cors')
 const app=express()
 app.use(cors({
     origin:'http://localhost:3000'
