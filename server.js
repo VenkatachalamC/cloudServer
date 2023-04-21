@@ -4,13 +4,8 @@ const multer=require('multer')
 const bodyParser=require('body-parser')
 const UserModel=require('./Models/User')
 const DocumentModel=require('./Models/documents')
-const cors=require('cors')
-
-
+const port =process.env.port || 5000;
 const app=express()
-app.use(cors({
-    origin: 'http://localhost:3000'
-}))
 const storage=multer.memoryStorage()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
