@@ -16,6 +16,10 @@ const DocumentSchema=new mongoose.Schema({
     Document:{
         data:Buffer,
         contentType:String
+    },
+    Deleted:{
+        type:Boolean,
+        default:false
     }
 })
 
