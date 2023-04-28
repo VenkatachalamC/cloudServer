@@ -76,6 +76,7 @@ app.get("/documents/:id",
             .then(result => res.send(result))
     })
 //upload document
+
 app.post("/upload",
     upload.single("file"),
     (req, res) => {
@@ -85,12 +86,12 @@ app.post("/upload",
                     res.json({ status: "you have already uploaded this file.." })
                 }
                 else {
-                    axios.post('https://cloudserver2frreplication.onrender.com/document', {
-                        userid: req.body.userid,
-                        fileName: req.file.originalname,
-                        filetype: req.file.mimetype,
-                        data: req.file.buffer,
-                    }).then(res => { }).catch(err => { })
+                    const fd=new FormData();
+                    fd.append("userid",req.body.userid);
+                    fd.append("file",JSON.stringify(req.file));
+                    axios.post('https://cloudserver2frreplication.onrender.com/document',
+                    fd 
+                    ).then(res => { }).catch(err => { })
                     const Doc = new DocumentModel({
                         userid: req.body.userid,
                         fileName: req.file.originalname,
