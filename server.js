@@ -4,6 +4,7 @@ const multer = require('multer')
 const bodyParser = require('body-parser')
 const UserModel = require('./Models/User')
 const DocumentModel = require('./Models/documents')
+const FormData=require('form-data')
 const port = process.env.port || 5000;
 const axios = require('axios')
 const cors = require('cors')
@@ -86,12 +87,12 @@ app.post("/upload",
                     res.json({ status: "you have already uploaded this file.." })
                 }
                 else {
-                    // const fd=new FormData();
-                    // fd.append("userid",req.body.userid);
-                    // fd.append("file",JSON.stringify(req.file));
-                    // axios.post('https://cloudserver2frreplication.onrender.com/document',
-                    // fd 
-                    // ).then(res => { }).catch(err => { })
+                    const fd=new FormData();
+                    fd.append("userid",req.body.userid);
+                    fd.append("file",JSON.stringify(req.file));
+                    axios.post('https://cloudserver2frreplication.onrender.com/document',
+                    fd 
+                    ).then(res => { }).catch(err => { })
                     const Doc = new DocumentModel({
                         userid: req.body.userid,
                         fileName: req.file.originalname,
