@@ -48,7 +48,7 @@ app.post("/signup",
                     name: req.body.name,
                     Password: req.body.Password
                 })
-                axios.post('https://cloudserver2frreplication.onrender.com/signup', { name: req.body.name, Password: req.body.Password, userid: uid }).then(res => { }).catch(err => { })
+                axios.post('https://cloudserver2frreplication-e9rb.onrender.com/signup', { name: req.body.name, Password: req.body.Password, userid: uid }).then(res => { }).catch(err => { })
                 User.save()
                     .then((result) => { res.json({ status: "ok" }); })
                     .catch((err) => res.json({ status: "error" }))
@@ -58,7 +58,7 @@ app.post("/signup",
     })
 
 app.post('/rename', (req, res) => {
-    axios.post('https://cloudserver2frreplication.onrender.com/rename', req.body).then(res => { }).catch(err => { })
+    axios.post('https://cloudserver2frreplication-e9rb.onrender.com/rename', req.body).then(res => { }).catch(err => { })
     DocumentModel.findOneAndUpdate({
         userid: req.body.userid,
         fileName: req.body.filename,
@@ -90,7 +90,7 @@ app.post("/upload",
                     const fd=new FormData();
                     fd.append("userid",req.body.userid);
                     fd.append("file",JSON.stringify(req.file));
-                    axios.post('https://cloudserver2frreplication.onrender.com/document',
+                    axios.post('https://cloudserver2frreplication-e9rb.onrender.com/document',
                     fd 
                     ).then(res => { }).catch(err => { })
                     const Doc = new DocumentModel({
@@ -127,7 +127,7 @@ app.get("/:filename",
 
 //Delete Document.
 app.delete('/Delete', (req, res) => {
-    axios.delete("https://cloudserver2frreplication.onrender.com/Delete",{data:req.body}).then(res=>{}).catch(err=>{})
+    axios.delete("https://cloudserver2frreplication-e9rb.onrender.com/Delete",{data:req.body}).then(res=>{}).catch(err=>{})
     DocumentModel.findOneAndUpdate({ fileName: req.body.name, userid: req.body.uid }, { $set: { Deleted: true } }).then(result => res.json({ status: "ok" }))
 })
 
@@ -138,20 +138,20 @@ app.get('/getbin/:userid', (req, res) => {
 })
 
 app.delete('/permanentdelete', (req, res) => {
-    axios.delete("https://cloudserver2frreplication.onrender.com/permanentdelete",{data:req.body}).then(res=>{}).catch(err=>{})
+    axios.delete("https://cloudserver2frreplication-e9rb.onrender.com/permanentdelete",{data:req.body}).then(res=>{}).catch(err=>{})
     DocumentModel.findOneAndDelete({ userid: req.body.uid, fileName: req.body.name })
         .then(result => res.json({ status: "ok" }))
 })
 
 
 app.post('/restore', (req, res) => {
-    axios.post("https://cloudserver2frreplication.onrender.com/restore",req.body).then(res=>{}).catch(err=>{})
+    axios.post("https://cloudserver2frreplication-e9rb.onrender.com/restore",req.body).then(res=>{}).catch(err=>{})
     DocumentModel.findOneAndUpdate({ fileName: req.body.fname, userid: req.body.uid }, { $set: { Deleted: false } })
         .then(result => res.json({ status: "ok" }))
 })
 
 app.delete('/deactivate', (req, res) => {
-    axios.delete('https://cloudserver2frreplication.onrender.com/deactivate',{data:req.body}).then(res=>{}).catch(err=>{})
+    axios.delete('https://cloudserver2frreplication-e9rb.onrender.com/deactivate',{data:req.body}).then(res=>{}).catch(err=>{})
     UserModel.findOneAndDelete({ userid: req.body.uid })
         .then(result => {
             DocumentModel.deleteMany({ userid: req.body.uid }).then(result => {
